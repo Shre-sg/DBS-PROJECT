@@ -1,5 +1,6 @@
 //CMD backend
 sudo apt install nodejs
+npm use 21
 npm init --yes
 npm i express
 sudo npm i -g nodemon
@@ -10,7 +11,7 @@ fuser -k 3000/tcp
 //CMD frontend
 npx create-react-app .   // . says in this dict
 npm start
- npm i react-router-dom
+npm i react-router-dom
 
 
 //MYSQL
