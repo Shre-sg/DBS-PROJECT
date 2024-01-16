@@ -2,45 +2,40 @@
 const Joi = require('joi');
 const express = require('express');
 const mysql = require('mysql');
+const cors = require("cors");
+
+
+const loginRoutes = require('./module/login');
+const registerRouter = require("./module/register");
 
 //start up with express
 const app = express()
 app.use(express.json());   //for post-express call
+app.use(cors());
 
-//conneting to my database
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "lingaiah60",
-    database: "TEAM_DATABASE"
-});
+
 
 //content
 app.get('/', (req, res)=> {
     res.send('Hello World');
 });
 
-app.get('/student', (req, res) => {
-    const q = "SELECT * FROM STUDENT;";
-    db.query(q,(err, data)=>{
-        if(err) return res.json(err);
-        return res.json(data);
-    })
+//content.login
+app.use('/login', loginRoutes);
+app.use('/register', registerRouter);
+
+app.post('/logout', (req, res) => {
+    // Destroy the session to log the user out
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error during logout' });
+        }
+
+        // Clear localStorage on the client side
+        res.json({ message: 'Logout successful', clearLocalStorage: true });
+    });
 });
 
-app.post('/student', (req,res)=>{
-    const q = "INSERT INTO STUDENT (`First_Name`, `Last_Name`) VALUES (?)";
-    //const values = ["DARSHAN", "JADHAV"];
-    const values = [
-        req.body.First_Name,
-        req.body.Last_Name
-    ];
-
-    db.query(q,[values],(err,data)=>{
-        if(err) return res.json(err);
-        return res.json("STUDENT DATA ADDED");
-    })
-});
 
 
 
