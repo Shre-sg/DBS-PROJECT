@@ -15,6 +15,7 @@ npm i react-router-dom
 
 //CMD react new 
 npm create vite@latest
+
 -->react-->typescript
 -->cd y
 --->npm insatll
