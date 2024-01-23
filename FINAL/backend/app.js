@@ -3,6 +3,8 @@ const Joi = require('joi');
 const express = require('express');
 const mysql = require('mysql');
 const cors = require("cors");
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 
 const loginRoutes = require('./module/login');
@@ -12,6 +14,13 @@ const registerRouter = require("./module/register");
 const app = express()
 app.use(express.json());   //for post-express call
 app.use(cors());
+app.use(cookieParser());
+
+app.use(session({
+    secret: 'whatttsupppDawggggg',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 
 
@@ -38,7 +47,6 @@ app.post('/logout', (req, res) => {
 
 
 
-
 //end
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Listening to PORT'));
+app.listen(port, () => console.log('Listening to PORT', port));
