@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './LoginSignUp.css';
+import 'bootswatch/dist/lux/bootstrap.min.css'; // Import the Bootswatch "Lux" theme
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,30 +20,48 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-      <div className="form-group">
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button className="btn btn-primary" onClick={handleLogin}>
-        Login
-      </button>
-      {error && <div className="error-msg">{error}</div>}
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">Login</h2>
+      <form>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+        {error && (
+          <div className="alert alert-danger mt-3" role="alert">
+            {error}
+          </div>
+        )}
+      </form>
     </div>
   );
 };

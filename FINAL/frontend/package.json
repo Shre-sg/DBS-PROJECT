@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.6",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "bootswatch": "^5.3.2",
+    "mdb-react-ui-kit": "^7.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.3",
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {
@@ -25,6 +30,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.0.8"
+    "vite": "^5.0.12"
   }
 }
