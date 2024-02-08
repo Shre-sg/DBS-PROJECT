@@ -1,28 +1,19 @@
-
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import 'bootswatch/dist/lux/bootstrap.min.css'; // Import the Bootswatch "Lux" theme
-import Login from './components/LoginSignup/Login';
-import Register from './components/LoginSignup/Register';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'bootswatch/dist/lux/bootstrap.min.css'; 
+import Login from './components/Login'; 
+import Register from './components/Register'; 
+import View from './components/View'; 
+import Dashboard from './components/Dashboard'; 
 
 const App = () => {
   return (
     <Router>
-      <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
-        {/* Add margin top for spacing */}
-        <h2 className="text-center mb-4">Money - Pilot</h2> {/* Center the text and add margin bottom */}
-        <nav className="text-center">
-          <Link to="/login" className="btn btn-primary me-2">
-            Login
-          </Link>{' '}
-          {/* Add button styles */}
-          <Link to="/register" className="btn btn-success">
-            Register
-          </Link>{' '}
-          {/* Add button styles */}
-        </nav>
+      <div className="container mt-5">
         <Routes>
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/view" element={<View />} />
         </Routes>
       </div>
     </Router>

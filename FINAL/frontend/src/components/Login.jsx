@@ -14,6 +14,8 @@ const Login = () => {
         password,
       });
       console.log(response.data.msg);
+      // Redirect to dashboard upon successful login
+      window.location.href = '/view';
     } catch (error) {
       setError(error.response.data.msg);
     }

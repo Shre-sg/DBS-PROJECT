@@ -4,14 +4,12 @@ const router = express.Router();
 const db = require('./db');
 const Joi = require('joi');
 
-
 const saltRounds = 10;
 
 const registerSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
 });
-
 
 router.post('/', async (req, res) => {
     try {
@@ -41,8 +39,8 @@ router.post('/', async (req, res) => {
             // Optionally, you can set a cookie to identify the session on the client side
             res.cookie('sessionId', req.session.id, { httpOnly: true });
 
-
             res.status(201).json({
+                success: true, // Indicate registration success
                 msg: 'User registered successfully!',
             });
         } 
