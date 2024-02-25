@@ -1,31 +1,20 @@
-import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import image from '../assets/rocket.png'; // Import the image at the beginning of the file
 
 const View = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-
-  useEffect(() => {
-    // Check if user is logged in
-    const loggedInStatus = localStorage.getItem('isLoggedIn');
-    const userEmail = localStorage.getItem('userEmail');
-
-    if (loggedInStatus === 'true' && userEmail) {
-      setIsLoggedIn(true);
-      setUserEmail(userEmail);
-    }
-  }, []);
-
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">View</h2>
-      {isLoggedIn ? (
-        <div>
-          <p>Welcome, {userEmail}!</p>
-          {/* Other content for logged-in users */}
+      <h2 className="text-center mb-4">DASHBOARD OF TEAM ANTARIKSH</h2>
+      <div className="d-flex justify-content-center">
+        <img src={image} alt="Rocket" style={{ width: '200px', marginRight: '20px' }} /> {/* Add the image here */}
+        <div className="btn-group-vertical">
+          <Link to="/recovery" className="btn btn-primary btn-lg mb-2">RECOVERY</Link>
+          <Link to="/avionics" className="btn btn-primary btn-lg mb-2">AVIONICS</Link>
+          <Link to="/aerostructures" className="btn btn-primary btn-lg mb-2">AEROSTRUCTURES</Link>
+          <Link to="/payload" className="btn btn-primary btn-lg mb-2">PAYLOAD</Link>
+          <Link to="/propulsion" className="btn btn-primary btn-lg mb-2">PROPULSION</Link>
         </div>
-      ) : (
-        <p>Please log in to view this page.</p>
-      )}
+      </div>
     </div>
   );
 };
