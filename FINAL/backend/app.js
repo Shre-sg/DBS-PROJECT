@@ -9,6 +9,11 @@ const cookieParser = require('cookie-parser');
 
 const loginRoutes = require('./module/login');
 const registerRouter = require("./module/register");
+const avionicsRouter = require("./module/avionics");
+const recoveryRouter = require("./module/recovery");
+const aerostructuresRouter = require("./module/aerostructures");
+const payloadRouter = require("./module/payload");
+const propulsionRouter = require("./module/propulsion");
 
 //start up with express
 const app = express()
@@ -32,8 +37,14 @@ app.get('/', (req, res)=> {
 //content.login
 app.use('/login', loginRoutes);
 app.use('/register', registerRouter);
+app.use('/avionics', avionicsRouter );
+app.use('/recovery', recoveryRouter );
+app.use('/aerostructures', aerostructuresRouter );
+app.use('/payload', payloadRouter );
+app.use('/propulsion', propulsionRouter );
 
 app.post('/logout', (req, res) => {
+    
     // Destroy the session to log the user out
     req.session.destroy((err) => {
         if (err) {
