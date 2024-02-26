@@ -54,30 +54,29 @@ router.post('/', (req, res) => {
 
 // GET request to fetch data of students whose Div_Name is avionics along with COMPONENT and TRANSACTION details
 router.get('/', (req, res) => {
-    // Fetch students with Div_Name "avionics"
-    db.query('SELECT * FROM STUDENT WHERE Div_Name = ?', 'avionics', (err, students) => {
+    // Fetch students, components, and transactions for the "avionics" division
+    const query = `
+        SELECT 
+            s.*, c.*, t.*
+        FROM 
+            STUDENT s
+        JOIN 
+            COMPONENTS c ON s.USN = c.Student_ID
+        JOIN 
+            TRANSACTION t ON c.Component_ID = t.Product_ID
+        WHERE 
+            s.Div_Name = 'avionics'
+    `;
+    
+    db.query(query, (err, result) => {
         if (err) {
-            console.error('Error fetching students:', err);
+            console.error('Error fetching data:', err);
             return res.status(500).json({ error: 'Internal server error' });
         }
 
-        // Fetch COMPONENT and TRANSACTION details for students with Div_Name "avionics"
-        db.query('SELECT * FROM COMPONENTS WHERE Student_ID IN (SELECT USN FROM STUDENT WHERE Div_Name = ?)', 'avionics', (err, components) => {
-            if (err) {
-                console.error('Error fetching components:', err);
-                return res.status(500).json({ error: 'Internal server error' });
-            }
-
-            db.query('SELECT * FROM TRANSACTION WHERE Product_ID IN (SELECT Component_ID FROM COMPONENTS WHERE Student_ID IN (SELECT USN FROM STUDENT WHERE Div_Name = ?))', 'avionics', (err, transactions) => {
-                if (err) {
-                    console.error('Error fetching transactions:', err);
-                    return res.status(500).json({ error: 'Internal server error' });
-                }
-
-                res.status(200).json({ students, components, transactions });
-            });
-        });
+        res.status(200).json(result);
     });
 });
+
 
 module.exports = router;
