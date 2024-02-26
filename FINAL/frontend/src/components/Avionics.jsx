@@ -11,8 +11,7 @@ const Avionics = () => {
     component: {
       Component_ID: '',
       Description: ''
-    }
-    ,
+    },
     transaction: {
       Transaction_ID: '',
       Product_ID: ''
