@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import image from '../assets/rocket.png'; // Import the image at the beginning of the file
+import image from '../assets/rocket.png'; 
 
 const View = () => {
   return (

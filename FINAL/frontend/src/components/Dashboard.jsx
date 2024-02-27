@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import 'bootswatch/dist/lux/bootstrap.min.css'; // Import the Bootswatch "Lux" theme
+import 'bootswatch/dist/lux/bootstrap.min.css';
 
 const Dashboard = () => {
   return (

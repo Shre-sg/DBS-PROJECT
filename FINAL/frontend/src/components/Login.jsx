@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import 'bootswatch/dist/lux/bootstrap.min.css'; // Import the Bootswatch "Lux" theme
+import 'bootswatch/dist/lux/bootstrap.min.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ const Login = () => {
         password,
       });
       console.log(response.data.msg);
-      // Redirect to dashboard upon successful login
+      
       window.location.href = '/view';
     } catch (error) {
       setError(error.response.data.msg);

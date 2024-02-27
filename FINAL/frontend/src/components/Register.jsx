@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import 'bootswatch/dist/lux/bootstrap.min.css'; // Import the Bootswatch "Lux" theme
+import 'bootswatch/dist/lux/bootstrap.min.css'; 
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -14,8 +14,8 @@ const Register = () => {
         password,
       });
       console.log(response.data.msg);
-      // Redirect to login page upon successful registration
-      window.location.href = '/login'; // Directly change the window location
+     
+      window.location.href = '/login'; 
     } catch (error) {
       setError(error.response.data.msg);
     }

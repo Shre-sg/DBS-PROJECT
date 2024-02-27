@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Recovery = () => {
-    const [originalData, setOriginalData] = useState([]); // New state to store original data
+    const [originalData, setOriginalData] = useState([]); 
     const [joinedData, setJoinedData] = useState([]);
     const [formData, setFormData] = useState({
         student: {},
@@ -11,7 +11,7 @@ const Recovery = () => {
     });
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searched, setSearched] = useState(false); // New state to track if search has been performed
+    const [searched, setSearched] = useState(false); 
 
     useEffect(() => {
         fetchData();
@@ -20,7 +20,7 @@ const Recovery = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:3000/recovery');
-            setOriginalData(response.data); // Store original data
+            setOriginalData(response.data);
             setJoinedData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -49,21 +49,21 @@ const Recovery = () => {
     };
 
     const handleSearch = () => {
-        // Trim any leading or trailing whitespaces from the search query
+       
         const trimmedSearchQuery = searchQuery.trim();
     
-        // Logic to filter joinedData based on searchQuery (assuming USN is unique)
+       
         const filteredData = originalData.filter(row => row.USN === trimmedSearchQuery);
         
         setJoinedData(filteredData);
-        setSearched(true); // Set searched to true after search
+        setSearched(true); 
     };
     
 
     const handleResetSearch = () => {
         setSearchQuery('');
-        setJoinedData(originalData); // Reset joinedData to originalData
-        setSearched(false); // Reset searched state
+        setJoinedData(originalData); 
+        setSearched(false); 
     };
 
     return (
@@ -83,7 +83,7 @@ const Recovery = () => {
                 </div>
             </div>
 
-            {searched && ( // Render reset search button only if search has been performed
+            {searched && ( 
                 <button className="btn btn-secondary mb-3" onClick={handleResetSearch}>Reset Search</button>
             )}
 
