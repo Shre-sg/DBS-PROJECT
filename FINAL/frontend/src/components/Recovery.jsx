@@ -49,14 +49,19 @@ const Recovery = () => {
     };
 
     const handleSearch = () => {
-       
-        const trimmedSearchQuery = searchQuery.trim();
-    
-       
-        const filteredData = originalData.filter(row => row.USN === trimmedSearchQuery);
+        const trimmedSearchQuery = searchQuery.trim().toLowerCase(); // Convert search query to lowercase for case-insensitive matching
         
+        // Filter data based on USN or student name (first name or last name)
+        const filteredData = originalData.filter(row => {
+            const studentFullName = `${row.First_Name.toLowerCase()} ${row.Last_Name.toLowerCase()}`; // Combine first name and last name
+            return (
+                row.USN.toLowerCase().includes(trimmedSearchQuery) || // Check if USN includes search query
+                studentFullName.includes(trimmedSearchQuery) // Check if student name includes search query
+            );
+        });
+            
         setJoinedData(filteredData);
-        setSearched(true); 
+        setSearched(true);
     };
     
 
@@ -74,7 +79,7 @@ const Recovery = () => {
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Search by USN"
+                    placeholder="Search by USN or NAME"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />

@@ -20,7 +20,7 @@ const Propulsion = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:3000/propulsion');
-            setOriginalData(response.data); 
+            setOriginalData(response.data);
             setJoinedData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -49,14 +49,19 @@ const Propulsion = () => {
     };
 
     const handleSearch = () => {
+        const trimmedSearchQuery = searchQuery.trim().toLowerCase(); // Convert search query to lowercase for case-insensitive matching
         
-        const trimmedSearchQuery = searchQuery.trim();
-    
-       
-        const filteredData = originalData.filter(row => row.USN === trimmedSearchQuery);
-        
+        // Filter data based on USN or student name (first name or last name)
+        const filteredData = originalData.filter(row => {
+            const studentFullName = `${row.First_Name.toLowerCase()} ${row.Last_Name.toLowerCase()}`; // Combine first name and last name
+            return (
+                row.USN.toLowerCase().includes(trimmedSearchQuery) || // Check if USN includes search query
+                studentFullName.includes(trimmedSearchQuery) // Check if student name includes search query
+            );
+        });
+            
         setJoinedData(filteredData);
-        setSearched(true); 
+        setSearched(true);
     };
     
 
@@ -73,8 +78,8 @@ const Propulsion = () => {
             <div className="input-group mb-3">
                 <input
                     type="text"
-                    className="form-controSl"
-                    placeholder="Search by USN"
+                    className="form-control"
+                    placeholder="Search by USN or NAME"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -178,4 +183,4 @@ const Propulsion = () => {
 };
 
 export default Propulsion;
-    
+        

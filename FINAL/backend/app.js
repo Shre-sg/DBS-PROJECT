@@ -14,6 +14,7 @@ const recoveryRouter = require("./module/recovery");
 const aerostructuresRouter = require("./module/aerostructures");
 const payloadRouter = require("./module/payload");
 const propulsionRouter = require("./module/propulsion");
+const costRouter = require('./module/cost'); 
 
 //start up with express
 const app = express()
@@ -42,6 +43,7 @@ app.use('/recovery', recoveryRouter );
 app.use('/aerostructures', aerostructuresRouter );
 app.use('/payload', payloadRouter );
 app.use('/propulsion', propulsionRouter );
+app.use('/cost', costRouter);
 
 app.post('/logout', (req, res) => {
     
