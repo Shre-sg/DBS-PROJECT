@@ -29,6 +29,30 @@ const Payload = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+    
+        // Validation rules for each field
+        const validationRules = {
+            'student.USN': value => /^[a-zA-Z0-9]*$/.test(value), // Alphanumeric characters allowed
+            'student.First_Name': value => /^[a-zA-Z]*$/.test(value), // Only letters allowed
+            'student.Last_Name': value => /^[a-zA-Z]*$/.test(value), // Only letters allowed
+            'student.Phone_Number': value => /^\d+$/.test(value), // Only digits allowed
+            'student.Email': value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), // Email format validation
+            'component.Component_ID': value => /^[a-zA-Z0-9]*$/.test(value), // Alphanumeric characters allowed
+            'component.Component_Name': value => /^[a-zA-Z\s]*$/.test(value), // Only letters and spaces allowed
+            'component.DETAILS': value => /^[a-zA-Z\s]*$/.test(value), // Only letters and spaces allowed
+            'transaction.Transaction_ID': value => /^\d+$/.test(value), // Only digits allowed
+            'transaction.Quantity': value => /^\d+$/.test(value), // Only digits allowed
+            'transaction.GSTIN_Number': value => /^[a-zA-Z0-9]*$/.test(value), // Alphanumeric characters allowed
+            'transaction.Date': value => !isNaN(Date.parse(value)), // Date format validation
+            'transaction.Total_Cost': value => /^\d+(\.\d+)?$/.test(value), // Float format validation
+           
+        };
+    
+        const validate = validationRules[name];
+        if (validate && !validate(value)) {
+            return;
+        }
+    
         setFormData(prevState => ({
             ...prevState,
             [name.split('.')[0]]: {
