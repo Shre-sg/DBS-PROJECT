@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Propulsion = () => {
-    const [originalData, setOriginalData] = useState([]); 
+    const [originalData, setOriginalData] = useState([]);
     const [joinedData, setJoinedData] = useState([]);
     const [formData, setFormData] = useState({
         student: {},
@@ -11,7 +11,9 @@ const Propulsion = () => {
     });
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searched, setSearched] = useState(false); 
+    const [searched, setSearched] = useState(false);
+    const [minCost, setMinCost] = useState('');
+    const [maxCost, setMaxCost] = useState('');
 
     useEffect(() => {
         fetchData();
@@ -26,9 +28,10 @@ const Propulsion = () => {
             console.error('Error fetching data:', error);
         }
     };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-    
+
         // Validation rules for each field
         const validationRules = {
             'student.USN': value => /^[a-zA-Z0-9]*$/.test(value), // Alphanumeric characters allowed
@@ -50,7 +53,7 @@ const Propulsion = () => {
         if (validate && !validate(value)) {
             return;
         }
-    
+
         setFormData(prevState => ({
             ...prevState,
             [name.split('.')[0]]: {
@@ -72,25 +75,34 @@ const Propulsion = () => {
 
     const handleSearch = () => {
         const trimmedSearchQuery = searchQuery.trim().toLowerCase(); // Convert search query to lowercase for case-insensitive matching
-        
+
         // Filter data based on USN or student name (first name or last name)
-        const filteredData = originalData.filter(row => {
+        let filteredData = originalData.filter(row => {
             const studentFullName = `${row.First_Name.toLowerCase()} ${row.Last_Name.toLowerCase()}`; // Combine first name and last name
             return (
                 row.USN.toLowerCase().includes(trimmedSearchQuery) || // Check if USN includes search query
                 studentFullName.includes(trimmedSearchQuery) // Check if student name includes search query
             );
         });
-            
+
+        // Apply cost filter if values are provided
+        if (minCost !== '' && maxCost !== '') {
+            filteredData = filteredData.filter(row => {
+                const cost = parseFloat(row.Total_Cost);
+                return cost >= parseFloat(minCost) && cost <= parseFloat(maxCost);
+            });
+        }
+
         setJoinedData(filteredData);
         setSearched(true);
     };
-    
 
     const handleResetSearch = () => {
         setSearchQuery('');
-        setJoinedData(originalData); 
-        setSearched(false); 
+        setMinCost('');
+        setMaxCost('');
+        setJoinedData(originalData);
+        setSearched(false);
     };
 
     return (
@@ -110,9 +122,30 @@ const Propulsion = () => {
                 </div>
             </div>
 
-            {searched && ( 
+            {searched && (
                 <button className="btn btn-secondary mb-3" onClick={handleResetSearch}>Reset Search</button>
             )}
+
+            <div className="form-row mb-3">
+                <div className="col">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Minimum Cost"
+                        value={minCost}
+                        onChange={(e) => setMinCost(e.target.value)}
+                    />
+                </div>
+                <div className="col">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Maximum Cost"
+                        value={maxCost}
+                        onChange={(e) => setMaxCost(e.target.value)}
+                    />
+                </div>
+            </div>
 
             <button className="btn btn-primary mb-3" onClick={() => setDialogOpen(true)}>Add Data</button>
 
@@ -190,7 +223,7 @@ const Propulsion = () => {
                                 <input type="text" name="transaction.GSTIN_Number" placeholder="GSTIN Number" onChange={handleInputChange} />
                                 <input type="text" name="transaction.Date" placeholder="Date" onChange={handleInputChange} />
                                 <input type="text" name="transaction.Total_Cost" placeholder="Total Cost" onChange={handleInputChange} />
-                                
+
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" onClick={() => setDialogOpen(false)}>Close</button>
@@ -205,4 +238,3 @@ const Propulsion = () => {
 };
 
 export default Propulsion;
-        
