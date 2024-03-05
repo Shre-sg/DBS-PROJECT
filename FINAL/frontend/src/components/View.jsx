@@ -3,8 +3,22 @@ import image from '../assets/rocket.png';
 import image1 from '../assets/rvce.png';
 import image2 from '../assets/team.png';
 import Graph from './Graph';
+import Axios from 'axios';
 
 const View = () => {
+  const handleLogout = () => {
+    Axios.post('http://localhost:3000/logout')
+      .then(response => {
+        localStorage.clear(); // Clear local storage upon successful logout
+        console.log(response.data.msg); // Log the logout message
+        // Redirect to the login page
+        window.location.href = '/login';
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+      });
+  };
+
   return (
     <div>
       <div className="container mt-5">
@@ -30,6 +44,12 @@ const View = () => {
         </div>
       </div>
       <Graph />
+      
+      {/* Buttons for View Full Data and Logout */}
+      <div className="container mt-3 text-center">
+        <Link to="/data" className="btn btn-primary mr-2">View Full Database</Link>
+        <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+      </div>
     </div>
   );
 };

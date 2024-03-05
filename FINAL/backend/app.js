@@ -15,6 +15,8 @@ const aerostructuresRouter = require("./module/aerostructures");
 const payloadRouter = require("./module/payload");
 const propulsionRouter = require("./module/propulsion");
 const costRouter = require('./module/cost'); 
+const dataRouter = require('./module/data'); 
+const logoutRouter = require('./module/logout');
 
 //start up with express
 const app = express()
@@ -22,11 +24,19 @@ app.use(express.json());   //for post-express call
 app.use(cors());
 app.use(cookieParser());
 
-app.use(session({
-    secret: 'whatttsupppDawggggg',
-    resave: false,
-    saveUninitialized: true,
-}));
+
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+  });
+  
+// app.use(session({
+//     secret: 'whatttsupppDawggggg',
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 
 
 
@@ -44,20 +54,8 @@ app.use('/aerostructures', aerostructuresRouter );
 app.use('/payload', payloadRouter );
 app.use('/propulsion', propulsionRouter );
 app.use('/cost', costRouter);
-
-app.post('/logout', (req, res) => {
-    
-    // Destroy the session to log the user out
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error during logout' });
-        }
-
-        // Clear localStorage on the client side
-        res.json({ message: 'Logout successful', clearLocalStorage: true });
-    });
-});
-
+app.use('/data', dataRouter);
+app.use('/logout', logoutRouter);
 
 
 //end

@@ -59,7 +59,7 @@ const Graph = () => {
 
   return (
     <div className="container mt-5" style={{ display: 'flex', justifyContent: 'center' }}>
-      <canvas id="myChart" style={{ maxWidth: '600px', maxHeight: '600px' }}></canvas>
+      <canvas id="myChart" style={{ maxWidth: '500px', maxHeight: '500px' }}></canvas>
     </div>
   );
 };

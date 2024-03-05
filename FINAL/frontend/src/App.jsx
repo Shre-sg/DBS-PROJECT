@@ -9,6 +9,7 @@ import Avionics from './components/Avionics';
 import Payload from './components/Payload';   
 import Recovery from './components/Recovery'; 
 import Propulsion from './components/Propulsion'; 
+import Data from './components/Data';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/aerostructures" element={<Aerostructures />} />
           <Route path="/payload" element={<Payload />} />
           <Route path="/propulsion" element={<Propulsion />} />
+          <Route path="/data" element={<Data/>}/>
 
         </Routes>
       </div>
