@@ -4,17 +4,17 @@ import Chart from 'chart.js/auto';
 
 const Graph = () => {
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await Axios.get('http://localhost:3000/cost'); // Assuming your backend API endpoint is '/cost'
+        renderChart(data);
+      } catch (error) {
+        console.error('Error fetching division costs:', error);
+      }
+    };
+
     fetchData();
   }, []);
-
-  const fetchData = async () => {
-    try {
-      const { data } = await Axios.get('http://localhost:3000/cost'); // Assuming your backend API endpoint is '/cost'
-      renderChart(data);
-    } catch (error) {
-      console.error('Error fetching division costs:', error);
-    }
-  };
 
   const renderChart = (data) => {
     const labels = data.map(division => division.Div_Name.toUpperCase());
