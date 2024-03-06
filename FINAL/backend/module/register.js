@@ -6,7 +6,7 @@ const db = require('./db');
 const Joi = require('joi');
 
 router.use(session({
-    secret: 'your-secret-key',
+    secret: 'wasssssuppp',
     resave: false,
     saveUninitialized: false
 }));
