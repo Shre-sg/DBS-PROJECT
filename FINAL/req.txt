@@ -1,3 +1,6 @@
+nodemon app.js   //backend
+npm run dev    //frontend
+
 //CMD backend
 sudo apt install nodejs
 nvm use 21

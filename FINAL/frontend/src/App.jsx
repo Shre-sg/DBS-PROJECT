@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import 'bootswatch/dist/lux/bootstrap.min.css'; 
+import 'bootswatch/dist/lux/bootstrap.min.css';
 import Login from './components/Login'; 
-import Register from './components/Register'; 
+import Register from './components/Register';  
 import View from './components/View'; 
 import Dashboard from './components/Dashboard'; 
 import Aerostructures from './components/Aerostructures';
