@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Avionics = () => {
@@ -12,8 +12,13 @@ const Avionics = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [searched, setSearched] = useState(false);
-    const [minCost, setMinCost] = useState('');
-    const [maxCost, setMaxCost] = useState('');
+    const [searchOptionsVisible, setSearchOptionsVisible] = useState(false);
+    const [searchOptions, setSearchOptions] = useState({
+        minCost: '',
+        maxCost: '',
+        startDate: '',
+        endDate: ''
+    });
 
     useEffect(() => {
         fetchData();
@@ -32,7 +37,7 @@ const Avionics = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        // Validation rules for each field
+        
         const validationRules = {
             'student.USN': value => /^[a-zA-Z0-9]*$/.test(value), // Alphanumeric characters allowed
             'student.First_Name': value => /^[a-zA-Z]*$/.test(value), // Only letters allowed
@@ -85,13 +90,18 @@ const Avionics = () => {
             );
         });
 
-        // Apply cost filter if values are provided
-        if (minCost !== '' && maxCost !== '') {
-            filteredData = filteredData.filter(row => {
-                const cost = parseFloat(row.Total_Cost);
-                return cost >= parseFloat(minCost) && cost <= parseFloat(maxCost);
-            });
-        }
+        // Apply filters based on search options
+        filteredData = filteredData.filter(row => {
+            const cost = parseFloat(row.Total_Cost);
+            const rowDate = new Date(row.Date);
+
+            return (
+                (searchOptions.minCost === '' || cost >= parseFloat(searchOptions.minCost)) &&
+                (searchOptions.maxCost === '' || cost <= parseFloat(searchOptions.maxCost)) &&
+                (searchOptions.startDate === '' || rowDate >= new Date(searchOptions.startDate)) &&
+                (searchOptions.endDate === '' || rowDate <= new Date(searchOptions.endDate))
+            );
+        });
 
         setJoinedData(filteredData);
         setSearched(true);
@@ -99,8 +109,12 @@ const Avionics = () => {
 
     const handleResetSearch = () => {
         setSearchQuery('');
-        setMinCost('');
-        setMaxCost('');
+        setSearchOptions({
+            minCost: '',
+            maxCost: '',
+            startDate: '',
+            endDate: ''
+        });
         setJoinedData(originalData);
         setSearched(false);
     };
@@ -126,26 +140,55 @@ const Avionics = () => {
                 <button className="btn btn-secondary mb-3" onClick={handleResetSearch}>Reset Search</button>
             )}
 
-            <div className="form-row mb-3">
-                <div className="col">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Minimum Cost"
-                        value={minCost}
-                        onChange={(e) => setMinCost(e.target.value)}
-                    />
-                </div>
-                <div className="col">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Maximum Cost"
-                        value={maxCost}
-                        onChange={(e) => setMaxCost(e.target.value)}
-                    />
-                </div>
+            <div className="d-flex align-items-center mb-3">
+                <button
+                    className="btn btn-link text-decoration-none"
+                    onClick={() => setSearchOptionsVisible(!searchOptionsVisible)}
+                >
+                    {searchOptionsVisible ? 'Hide Filters' : 'Show Filters'}
+                </button>
             </div>
+
+            {searchOptionsVisible && (
+                <div className="form-row mb-3">
+                    <div className="col">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Cost Range (Minimum)"
+                            value={searchOptions.minCost}
+                            onChange={(e) => setSearchOptions({...searchOptions, minCost: e.target.value})}
+                        />
+                    </div>
+                    <div className="col">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Cost Range (Maximum)"
+                            value={searchOptions.maxCost}
+                            onChange={(e) => setSearchOptions({...searchOptions, maxCost: e.target.value})}
+                        />
+                    </div>
+                    <div className="col">
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="Start Date"
+                            value={searchOptions.startDate}
+                            onChange={(e) => setSearchOptions({...searchOptions, startDate: e.target.value})}
+                        />
+                    </div>
+                    <div className="col">
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="End Date"
+                            value={searchOptions.endDate}
+                            onChange={(e) => setSearchOptions({...searchOptions, endDate: e.target.value})}
+                        />
+                    </div>
+                </div>
+            )}
 
             <button className="btn btn-primary mb-3" onClick={() => setDialogOpen(true)}>Add Data</button>
 
