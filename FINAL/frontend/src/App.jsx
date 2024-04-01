@@ -10,6 +10,7 @@ import Payload from './components/Payload';
 import Recovery from './components/Recovery'; 
 import Propulsion from './components/Propulsion'; 
 import Data from './components/Data';
+import Test from './components/Test';
 
 const App = () => {
   return (
@@ -26,6 +27,8 @@ const App = () => {
           <Route path="/payload" element={<Payload />} />
           <Route path="/propulsion" element={<Propulsion />} />
           <Route path="/data" element={<Data/>}/>
+          <Route path="/test" element={<Test/>}/>
+          
 
         </Routes>
       </div>

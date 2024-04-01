@@ -17,6 +17,7 @@ const propulsionRouter = require("./module/propulsion");
 const costRouter = require('./module/cost'); 
 const dataRouter = require('./module/data'); 
 const logoutRouter = require('./module/logout');
+const testRouter = require('./module/test');
 
 //start up with express
 const app = express()
@@ -56,6 +57,7 @@ app.use('/propulsion', propulsionRouter );
 app.use('/cost', costRouter);
 app.use('/data', dataRouter);
 app.use('/logout', logoutRouter);
+app.use('/test', testRouter);
 
 
 //end
