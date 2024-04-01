@@ -48,6 +48,12 @@ const Graph = () => {
         }]
       },
       options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom'
+          }
+        },
         scales: {
           y: {
             beginAtZero: true
@@ -58,8 +64,11 @@ const Graph = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ display: 'flex', justifyContent: 'center' }}>
-      <canvas id="myChart" style={{ maxWidth: '500px', maxHeight: '500px' }}></canvas>
+    <div className="container mt-5">
+      <h4 className="text-center">Total Spent Amount by Each Division</h4>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <canvas id="myChart" style={{ maxWidth: '500px', maxHeight: '500px' }}></canvas>
+      </div>
     </div>
   );
 };
